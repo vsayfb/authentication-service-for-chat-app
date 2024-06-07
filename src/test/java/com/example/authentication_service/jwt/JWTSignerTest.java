@@ -11,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import com.example.authentication_service.dto.AuthPayload;
 import com.example.authentication_service.jwt.claims.JWTClaims;
-import com.example.authentication_service.jwt.claims.JWTPayload;
 
 public class JWTSignerTest {
 
@@ -20,7 +20,7 @@ public class JWTSignerTest {
 
     private String base64URLEncoded = "NUU2MTFFNDUxREI4MTc4N0RGNUY3NThGMEFBMUExQUQ=";
 
-    private JWTPayload payload;
+    private AuthPayload payload;
 
     @BeforeEach
     void beforeEach() {
@@ -28,7 +28,7 @@ public class JWTSignerTest {
 
         jwtSigner.setSecretKey(base64URLEncoded);
 
-        payload = new JWTPayload();
+        payload = new AuthPayload();
 
         payload.setUsername("joe");
 
