@@ -6,4 +6,5 @@ import lombok.Data;
 public class AuthPayload {
 
     private String username;
+    private String password;
 }

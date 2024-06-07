@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.example.authentication_service.jwt.claims.JWTClaims;
-import com.example.authentication_service.dto.AuthPayload;
+import com.example.authentication_service.jwt.claims.JWTPayload;
 
 @Component
 public class JWTSigner {
@@ -33,7 +33,7 @@ public class JWTSigner {
 
     private final static long expireAfterOneDay = 86400000;
 
-    public String sign(AuthPayload payload) throws IllegalArgumentException {
+    public String sign(JWTPayload payload) throws IllegalArgumentException {
 
         if (payload == null) {
             throw new IllegalArgumentException("Payload cannot be null or empty.");
@@ -41,6 +41,7 @@ public class JWTSigner {
 
         Map<String, Object> claims = new HashMap<>();
 
+        claims.put("sub", payload.getId());
         claims.put("username", payload.getUsername());
 
         String jws = Jwts.builder()
