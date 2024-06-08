@@ -12,7 +12,7 @@
 	<artifactId>authentication_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>authentication_service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Authentication project for Chat Application</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -56,6 +56,11 @@
             <version>0.12.5</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>au.com.dius.pact.consumer</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.6.10</version>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -72,6 +77,16 @@
 					</excludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>au.com.dius.pact.provider</groupId>
+                <artifactId>maven</artifactId>
+                <version>4.1.11</version>
+                <configuration>
+                    <pactBrokerUrl>http://localhost:9000</pactBrokerUrl>
+                    <pactBrokerUsername>pact_workshop</pactBrokerUsername>
+                    <pactBrokerPassword>pact_workshop</pactBrokerPassword>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
