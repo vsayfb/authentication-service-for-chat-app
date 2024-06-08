@@ -78,7 +78,14 @@ public class AuthenticationServiceTest {
         @Test
         void shouldReturnUserDTO() {
 
-            UserDTO userDummy = new UserDTO("username", "id");
+            UserDTO.Data userDummyData = new UserDTO.Data();
+
+            userDummyData.setId("id");
+            userDummyData.setUsername("username");
+
+            UserDTO userDummy = new UserDTO();
+
+            userDummy.setData(userDummyData);
 
             ResponseEntity<UserDTO> responseEntity = new ResponseEntity<>(userDummy, HttpStatus.OK);
 
@@ -87,9 +94,9 @@ public class AuthenticationServiceTest {
                             eq(UserDTO.class)))
                     .thenReturn(responseEntity);
 
-            UserDTO userDTO = authenticationService.authenticate(authPayload);
+            UserDTO.Data userDTO = authenticationService.authenticate(authPayload);
 
-            assertEquals(userDummy, userDTO);
+            assertEquals(userDummyData, userDTO);
         }
 
     }
@@ -124,7 +131,14 @@ public class AuthenticationServiceTest {
         @Test
         void shouldReturnUserDTO() {
 
-            UserDTO userDummy = new UserDTO("username", "id");
+            UserDTO.Data userDummyData = new UserDTO.Data();
+
+            userDummyData.setUsername("id");
+            userDummyData.setUsername("username");
+
+            UserDTO userDummy = new UserDTO();
+
+            userDummy.setData(userDummyData);
 
             ResponseEntity<UserDTO> responseEntity = new ResponseEntity<>(userDummy, HttpStatus.CREATED);
 
@@ -133,9 +147,9 @@ public class AuthenticationServiceTest {
                             eq(UserDTO.class)))
                     .thenReturn(responseEntity);
 
-            UserDTO userDTO = authenticationService.newUser(authPayload);
+            UserDTO.Data userDTO = authenticationService.newUser(authPayload);
 
-            assertEquals(userDummy, userDTO);
+            assertEquals(userDummyData, userDTO);
         }
     }
 

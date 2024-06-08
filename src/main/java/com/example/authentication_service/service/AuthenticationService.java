@@ -31,7 +31,7 @@ public class AuthenticationService {
         this.restTemplate = restTemplate;
     }
 
-    public UserDTO authenticate(AuthPayload payload) throws HttpClientErrorException, HttpServerErrorException {
+    public UserDTO.Data authenticate(AuthPayload payload) throws HttpClientErrorException, HttpServerErrorException {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -43,10 +43,10 @@ public class AuthenticationService {
                 httpEntity,
                 UserDTO.class);
 
-        return responseEntity.getBody();
+        return responseEntity.getBody().getData();
     }
 
-    public UserDTO newUser(AuthPayload payload) throws HttpClientErrorException, HttpServerErrorException {
+    public UserDTO.Data newUser(AuthPayload payload) throws HttpClientErrorException, HttpServerErrorException {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -58,7 +58,7 @@ public class AuthenticationService {
                 httpEntity,
                 UserDTO.class);
 
-        return responseEntity.getBody();
+        return responseEntity.getBody().getData();
     }
 
 }

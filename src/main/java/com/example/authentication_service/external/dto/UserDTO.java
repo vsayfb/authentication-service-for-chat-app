@@ -1,9 +1,20 @@
 package com.example.authentication_service.external.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserDTO {
-    private final String username;
-    private final String id;
+
+    private Data data;
+
+    @lombok.Data
+    @NoArgsConstructor
+    public static class Data {
+        private String id;
+        private String username;
+    }
+
 }
