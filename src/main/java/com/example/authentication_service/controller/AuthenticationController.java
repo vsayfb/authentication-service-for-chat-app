@@ -1,5 +1,6 @@
 package com.example.authentication_service.controller;
 
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
@@ -20,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
 
@@ -33,7 +34,7 @@ public class AuthenticationController {
         this.jwtSigner = jwtSigner;
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthPayload authPayload) {
 
         try {
@@ -56,7 +57,7 @@ public class AuthenticationController {
 
             return new ResponseEntity<>(response, HttpStatus.OK);
 
-        } catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
 
             HttpHeaders headers = new HttpHeaders();
 
@@ -64,18 +65,11 @@ public class AuthenticationController {
 
             return new ResponseEntity<>(e.getResponseBodyAsString(), headers, e.getStatusCode());
 
-        } catch (HttpServerErrorException e) {
-
-            HttpHeaders headers = new HttpHeaders();
-
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            return new ResponseEntity<>(e.getResponseBodyAsString(), headers, e.getStatusCode());
         }
 
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthPayload authPayload) {
 
         try {
@@ -99,7 +93,7 @@ public class AuthenticationController {
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
-        } catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
 
             HttpHeaders headers = new HttpHeaders();
 
@@ -107,13 +101,6 @@ public class AuthenticationController {
 
             return new ResponseEntity<>(e.getResponseBodyAsString(), headers, e.getStatusCode());
 
-        } catch (HttpServerErrorException e) {
-
-            HttpHeaders headers = new HttpHeaders();
-
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            return new ResponseEntity<>(e.getResponseBodyAsString(), headers, e.getStatusCode());
         }
 
     }
