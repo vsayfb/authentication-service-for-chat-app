@@ -15,6 +15,7 @@ public class UserDTO {
     public static class Data {
         private String id;
         private String username;
+        private String profilePicture;
     }
 
 }

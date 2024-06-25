@@ -6,4 +6,5 @@ import lombok.Data;
 public class JWTPayload {
     private String id;
     private String username;
+    private String profilePicture;
 }

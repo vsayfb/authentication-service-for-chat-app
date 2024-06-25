@@ -44,6 +44,7 @@ public class AuthenticationController {
 
             jwtPayload.setId(user.getId());
             jwtPayload.setUsername(user.getUsername());
+            jwtPayload.setProfilePicture(user.getProfilePicture());
 
             String token = jwtSigner.sign(jwtPayload);
 
@@ -79,6 +80,7 @@ public class AuthenticationController {
 
             jwtPayload.setId(newUser.getId());
             jwtPayload.setUsername(newUser.getUsername());
+            jwtPayload.setProfilePicture(newUser.getProfilePicture());
 
             String token = jwtSigner.sign(jwtPayload);
 

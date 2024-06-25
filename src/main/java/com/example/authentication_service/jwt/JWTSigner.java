@@ -73,6 +73,7 @@ public class JWTSigner {
             JWTClaims jwtClaims = new JWTClaims();
 
             jwtClaims.setUsername((String) claims.get("username"));
+            jwtClaims.setProfilePicture((String) claims.get("profilePicture"));
             jwtClaims.setExp(claims.getExpiration().getTime());
             jwtClaims.setIat(claims.getIssuedAt().getTime());
             jwtClaims.setIss(claims.getIssuer());
