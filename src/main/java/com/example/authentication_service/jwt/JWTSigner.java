@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +44,7 @@ public class JWTSigner {
 
         claims.put("sub", payload.getId());
         claims.put("username", payload.getUsername());
+        claims.put("profilePicture", payload.getProfilePicture());
 
         String jws = Jwts.builder()
                 .signWith(secretKey)
@@ -70,14 +72,17 @@ public class JWTSigner {
                     .parseSignedClaims(jwt)
                     .getPayload();
 
+            System.out.println("claims: " + claims);
+
             JWTClaims jwtClaims = new JWTClaims();
 
             jwtClaims.setUsername((String) claims.get("username"));
             jwtClaims.setProfilePicture((String) claims.get("profilePicture"));
+            jwtClaims.setSub(claims.getSubject());
             jwtClaims.setExp(claims.getExpiration().getTime());
             jwtClaims.setIat(claims.getIssuedAt().getTime());
             jwtClaims.setIss(claims.getIssuer());
-            jwtClaims.setId(claims.getId());
+            jwtClaims.setJti(UUID.fromString(claims.getId()));
 
             return Optional.of(jwtClaims);
         } catch (JwtException e) {

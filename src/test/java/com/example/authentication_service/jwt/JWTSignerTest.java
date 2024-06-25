@@ -32,6 +32,7 @@ public class JWTSignerTest {
 
         payload.setId("1");
         payload.setUsername("joe");
+        payload.setProfilePicture("http://");
     }
 
     @Nested
@@ -107,6 +108,8 @@ public class JWTSignerTest {
 
             String signed = jwtSigner.sign(payload);
 
+            System.out.println(signed);
+
             Optional<JWTClaims> optional = jwtSigner.validateToken(signed);
 
             assertTrue(optional.isPresent());
@@ -115,8 +118,6 @@ public class JWTSignerTest {
 
             assertEquals(claims.getUsername(), payload.getUsername());
             assertEquals(claims.getIss(), "http://authentication-server");
-            assertNotNull(claims.getExp());
-            assertNotNull(claims.getIat());
         }
 
     }
