@@ -1,0 +1,15 @@
+services:
+  authentication-service:
+    container_name: auth-service
+    build:
+      context: .
+      target: ${BUILD_TARGET:-dev}
+    volumes:
+      - ~/.m2:/root/.m2
+      - ./:/app
+    networks:
+      - ms
+
+networks:
+  ms:
+    external: true
