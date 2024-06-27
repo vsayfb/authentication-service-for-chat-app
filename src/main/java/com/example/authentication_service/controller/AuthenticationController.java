@@ -51,6 +51,7 @@ public class AuthenticationController {
             HashMap<String, Object> responseData = new HashMap<>();
 
             responseData.put("token", token);
+            responseData.put("user", user);
 
             HashMap<String, Object> response = new HashMap<>();
 

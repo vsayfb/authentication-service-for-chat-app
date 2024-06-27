@@ -116,7 +116,9 @@ public class AuthenticationControllerTest {
                     .content(mapper.writeValueAsString(authPayload)))
                     .andExpect(status().isOk())
                     .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(jsonPath("$.data.token", Matchers.equalTo(dummyJwt)));
+                    .andExpect(jsonPath("$.data.token", Matchers.equalTo(dummyJwt)))
+                    .andExpect(jsonPath("$.data.user.id", Matchers.equalTo(dummyUserData.getId())))
+                    .andExpect(jsonPath("$.data.user.username", Matchers.equalTo(authPayload.getUsername())));
         }
 
     }
