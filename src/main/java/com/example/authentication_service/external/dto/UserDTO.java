@@ -1,5 +1,7 @@
 package com.example.authentication_service.external.dto;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +18,7 @@ public class UserDTO {
         private String id;
         private String username;
         private String profilePicture;
+        private Date createdAt;
     }
 
 }
