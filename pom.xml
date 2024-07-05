@@ -82,9 +82,18 @@
                 <artifactId>maven</artifactId>
                 <version>4.1.11</version>
                 <configuration>
-                    <pactBrokerUrl>http://pact-broker:9292</pactBrokerUrl>
+                    <pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
                     <pactBrokerUsername>pact_workshop</pactBrokerUsername>
                     <pactBrokerPassword>pact_workshop</pactBrokerPassword>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <pact_do_not_track>true</pact_do_not_track>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
 		</plugins>
