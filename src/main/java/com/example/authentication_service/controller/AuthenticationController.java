@@ -1,16 +1,21 @@
 package com.example.authentication_service.controller;
 
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.example.authentication_service.dto.AuthPayload;
+import com.example.authentication_service.dto.AuthenticatedUser;
+import com.example.authentication_service.dto.AuthenticatedUserDto;
 import com.example.authentication_service.external.dto.UserDTO.Data;
 import com.example.authentication_service.jwt.JWTSigner;
 import com.example.authentication_service.jwt.claims.JWTPayload;
 import com.example.authentication_service.service.AuthenticationService;
+import com.example.authentication_service.swagger.LoginApiResponse;
+import com.example.authentication_service.swagger.RegisterApiResponse;
+
+import jakarta.validation.Valid;
 
 import java.util.HashMap;
 
@@ -34,8 +39,9 @@ public class AuthenticationController {
         this.jwtSigner = jwtSigner;
     }
 
+    @LoginApiResponse
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthPayload authPayload) {
+    public ResponseEntity<?> login(@RequestBody @Valid AuthPayload authPayload) {
 
         try {
             Data user = authenticationService.authenticate(authPayload);
@@ -48,16 +54,12 @@ public class AuthenticationController {
 
             String token = jwtSigner.sign(jwtPayload);
 
-            HashMap<String, Object> responseData = new HashMap<>();
+            AuthenticatedUser authenticatedUser = new AuthenticatedUser();
 
-            responseData.put("token", token);
-            responseData.put("user", user);
+            authenticatedUser.setToken(token);
+            authenticatedUser.setUser(user);
 
-            HashMap<String, Object> response = new HashMap<>();
-
-            response.put("data", responseData);
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(new AuthenticatedUserDto(authenticatedUser), HttpStatus.OK);
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
 
@@ -71,8 +73,9 @@ public class AuthenticationController {
 
     }
 
+    @RegisterApiResponse
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AuthPayload authPayload) {
+    public ResponseEntity<?> register(@RequestBody @Valid AuthPayload authPayload) {
 
         try {
             Data newUser = authenticationService.newUser(authPayload);
@@ -85,17 +88,12 @@ public class AuthenticationController {
 
             String token = jwtSigner.sign(jwtPayload);
 
-            HashMap<String, Object> responseData = new HashMap<>();
+            AuthenticatedUser authenticatedUser = new AuthenticatedUser();
 
-            responseData.put("token", token);
-            responseData.put("user", newUser);
+            authenticatedUser.setToken(token);
+            authenticatedUser.setUser(newUser);
 
-            HashMap<String, Object> response = new HashMap<>();
-
-            response.put("data", responseData);
-
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-
+            return new ResponseEntity<>(new AuthenticatedUserDto(authenticatedUser), HttpStatus.CREATED);
         } catch (HttpClientErrorException | HttpServerErrorException e) {
 
             HttpHeaders headers = new HttpHeaders();
